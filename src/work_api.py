@@ -37,7 +37,7 @@ class HHApiVacancies(ApiVacancies):
         self.params = {
             "text": self.title_vacancy,
             "search_field": "name",
-            "order_by": "publication_time"
+            "order_by": "publication_time",
         }
 
     def get_vacancies(self, per_page: int = 10) -> list[dict]:
@@ -47,7 +47,9 @@ class HHApiVacancies(ApiVacancies):
         :return: список вакансий в виде словарей
         """
         self.params["per_page"] = per_page
-        response_api = requests.get(url=BASIC_URL_HH, params=self.params).json()["items"]
+        response_api = requests.get(url=BASIC_URL_HH, params=self.params).json()[
+            "items"
+        ]
         return response_api
 
 
@@ -63,13 +65,7 @@ class SJApiVacancies(ApiVacancies):
         """
         self.title_vacancy = title_vacancy
         self.params = {
-            "keywords": [
-                {
-                    "srws": 1,
-                    "skwc": "or",
-                    "keys": self.title_vacancy
-                }
-            ]
+            "keywords": [{"srws": 1, "skwc": "or", "keys": self.title_vacancy}]
         }
 
     def get_vacancies(self, count: int = 10):
@@ -79,7 +75,7 @@ class SJApiVacancies(ApiVacancies):
          :return: список вакансий в виде словарей
         """
         self.params["count"] = count
-        headers = {
-            "X-Api-App-Id": os.getenv("TOKEN_API_SUPERJOB")
-        }
-        return requests.get(url=BASIC_URL_SUPERJOB, json=self.params, headers=headers).json()["objects"]
+        headers = {"X-Api-App-Id": os.getenv("TOKEN_API_SUPERJOB")}
+        return requests.get(
+            url=BASIC_URL_SUPERJOB, json=self.params, headers=headers
+        ).json()["objects"]
