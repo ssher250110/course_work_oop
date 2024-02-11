@@ -91,6 +91,10 @@ class Vacancy:
         return currency
 
     def avg_salary(self):
+        """
+        Получение средней зарплаты вакансии
+        :return: среднее значение зарплаты
+        """
         return (self.salary_from + self.salary_to) / 2
 
     def __eq__(self, other):
@@ -108,6 +112,10 @@ class Vacancy:
         return self.avg_salary() > other.avg_salary()
 
     def print_salary(self):
+        """
+        Метод для корректного отображения зарплаты для пользователя
+        :return: корректное отображение зарплаты
+        """
         if self.salary_from == 0 and self.salary_to == 0:
             return "не указана"
         elif self.salary_from == 0 and self.salary_to != 0:
@@ -132,6 +140,10 @@ class Vacancy:
         )
 
     def to_dict(self):
+        """
+        Метод для сохранения вакансии из экземпляра класса
+        :return:
+        """
         return {
             "vacancy_name": self.vacancy_name,
             "salary_from": self.salary_from,
