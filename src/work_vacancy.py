@@ -177,7 +177,6 @@ class HeadHunterVacancy(Vacancy):
     def to_dict(self):
         vacancy_dict = super().to_dict()
         new_vacancy_dict = {"platform_name": self.platform_name} | vacancy_dict
-        # vacancy_dict["platform_name"] = self.platform_name
         return new_vacancy_dict
 
 
@@ -202,5 +201,4 @@ class SuperJobVacancy(Vacancy):
     def to_dict(self):
         vacancy_dict = super().to_dict()
         new_vacancy_dict = {"platform_name": self.platform_name} | vacancy_dict
-        # vacancy_dict["platform_name"] = self.platform_name
         return new_vacancy_dict
