@@ -138,17 +138,17 @@ class Vacancy:
         """
         return (
             f"Название вакансии: {self.vacancy_name}\n"
-            f"{self.description}\n"
+            f"Описание: {self.description}\n"
             f"Город: {self.address}\n"
             f"Дата публикации: {self.date_published}\n"
             f"Зарплата: {self.print_salary()}\n"
             f"Ссылка на вакансию: {self.url}\n"
         )
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         """
-        Метод для сохранения вакансии из экземпляра класса
-        :return:
+        Метод представления вакансии в виде словаря
+        :return: словарь с вакансией
         """
         return {
             "vacancy_name": self.vacancy_name,
@@ -173,14 +173,18 @@ class HeadHunterVacancy(Vacancy):
         return (
             f"{self.platform_name}\n"
             f"Название вакансии: {self.vacancy_name}\n"
-            f"{self.description}\n"
+            f"Описание: {self.description}\n"
             f"Город: {self.address}\n"
             f"Дата публикации: {self.date_published}\n"
             f"Зарплата: {self.print_salary()}\n"
             f"Ссылка на вакансию: {self.url}\n"
         )
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
+        """
+        Метод представления вакансии в виде словаря
+        :return: словарь с вакансией
+        """
         vacancy_dict = super().to_dict()
         new_vacancy_dict = {"platform_name": self.platform_name} | vacancy_dict
         return new_vacancy_dict
@@ -197,14 +201,18 @@ class SuperJobVacancy(Vacancy):
         return (
             f"{self.platform_name}\n"
             f"Название вакансии: {self.vacancy_name}\n"
-            f"{self.description}\n"
+            f"Описание: {self.description}\n"
             f"Город: {self.address}\n"
             f"Дата публикации: {self.date_published}\n"
             f"Зарплата: {self.print_salary()}\n"
             f"Ссылка на вакансию: {self.url}\n"
         )
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
+        """
+        Метод представления вакансии в виде словаря
+        :return: словарь с вакансией
+        """
         vacancy_dict = super().to_dict()
         new_vacancy_dict = {"platform_name": self.platform_name} | vacancy_dict
         return new_vacancy_dict
