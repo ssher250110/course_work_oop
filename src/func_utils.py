@@ -56,7 +56,7 @@ def sorted_vacancies_salary(vacancies: list[Vacancy]):
 
 def convert_to_instance(vacancies: list[dict]) -> list[Vacancy]:
     """
-    Метод для конвертации списка с вакансиями
+    Метод для конвертации списка с вакансиями обратно в список с экземплярами класса
     :param vacancies: список словарей с вакансиями
     :return: список экземпляров класса с вакансиями
     """
