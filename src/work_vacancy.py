@@ -36,7 +36,7 @@ class Vacancy:
         :param url: сайт вакансии
         """
         self.__vacancy_name = vacancy_name
-        self.description = description
+        self.description = self.description_vacancy(description)
         self.address = address
         self.date_published = date_published
         self.__salary_from = self.validate_salary(salary_from)
@@ -67,6 +67,12 @@ class Vacancy:
     @property
     def url(self):
         return self.__url
+
+    @staticmethod
+    def description_vacancy(desc):
+        if desc is None:
+            return "Требования отсутствуют"
+        return desc
 
     @staticmethod
     def validate_salary(salary):
