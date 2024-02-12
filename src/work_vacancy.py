@@ -174,6 +174,12 @@ class HeadHunterVacancy(Vacancy):
             f"Ссылка на вакансию: {self.url}\n"
         )
 
+    def to_dict(self):
+        vacancy_dict = super().to_dict()
+        new_vacancy_dict = {"platform_name": self.platform_name} | vacancy_dict
+        # vacancy_dict["platform_name"] = self.platform_name
+        return new_vacancy_dict
+
 
 class SuperJobVacancy(Vacancy):
     platform_name = "SJ"
@@ -192,3 +198,9 @@ class SuperJobVacancy(Vacancy):
             f"Зарплата: {self.print_salary()}\n"
             f"Ссылка на вакансию: {self.url}\n"
         )
+
+    def to_dict(self):
+        vacancy_dict = super().to_dict()
+        new_vacancy_dict = {"platform_name": self.platform_name} | vacancy_dict
+        # vacancy_dict["platform_name"] = self.platform_name
+        return new_vacancy_dict
