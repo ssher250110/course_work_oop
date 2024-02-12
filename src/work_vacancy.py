@@ -163,7 +163,7 @@ class Vacancy:
 
 
 class HeadHunterVacancy(Vacancy):
-    platform_name = "HH"
+    platform_name = "HeadHunter"
 
     def __str__(self):
         """
@@ -171,7 +171,7 @@ class HeadHunterVacancy(Vacancy):
         :return: информацию о вакансии
         """
         return (
-            f"HeadHunter\n"
+            f"{self.platform_name}\n"
             f"Название вакансии: {self.vacancy_name}\n"
             f"{self.description}\n"
             f"Город: {self.address}\n"
@@ -187,7 +187,7 @@ class HeadHunterVacancy(Vacancy):
 
 
 class SuperJobVacancy(Vacancy):
-    platform_name = "SJ"
+    platform_name = "SuperJobs"
 
     def __str__(self):
         """
@@ -195,7 +195,7 @@ class SuperJobVacancy(Vacancy):
         :return: информацию о вакансии
         """
         return (
-            f"SuperJob\n"
+            f"{self.platform_name}\n"
             f"Название вакансии: {self.vacancy_name}\n"
             f"{self.description}\n"
             f"Город: {self.address}\n"
