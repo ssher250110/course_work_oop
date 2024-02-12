@@ -146,6 +146,9 @@ class Vacancy:
         """
         return {
             "vacancy_name": self.vacancy_name,
+            "description": self.description,
+            "address": self.address,
+            "date_published": self.date_published,
             "salary_from": self.salary_from,
             "salary_to": self.salary_to,
             "currency": self.currency,
