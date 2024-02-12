@@ -12,8 +12,8 @@ def create_hh_instances(vacancies: list[dict]) -> list[Vacancy]:
     return [
         HeadHunterVacancy(
             vacancy_name=vacancy["name"],
-            description=vacancy["snippet"]["requirement"].replace("<highlighttext>", "", ).replace(
-                "</highlighttext>", "", ),
+            description=[vacancy["snippet"]["requirement"].replace("<highlighttext>", "", ).replace(
+                "</highlighttext>", "", ) if vacancy.get("snippet").get("requirement") else None][0],
             address=vacancy["area"]["name"],
             date_published=datetime.fromisoformat(vacancy["published_at"]).strftime("%d-%m-%Y %H:%M:%S"),
             salary_from=[vacancy["salary"]['from'] if vacancy.get("salary") else None][0],
