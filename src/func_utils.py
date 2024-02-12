@@ -62,8 +62,10 @@ def convert_to_instance(vacancies: list[dict]) -> list[Vacancy]:
     """
     instances = []
     for vacancy in vacancies:
-        if vacancy["platform"] == "HH":
+        if vacancy["platform_name"] == "HeadHunter":
+            del vacancy["platform_name"]
             instances.append(HeadHunterVacancy(**vacancy))
-        elif vacancy["platform"] == "SJ":
+        elif vacancy["platform_name"] == "SuperJobs":
+            del vacancy["platform_name"]
             instances.append(SuperJobVacancy(**vacancy))
     return instances
