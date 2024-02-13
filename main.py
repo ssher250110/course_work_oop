@@ -40,6 +40,23 @@ def main():
         print(vacancy)
 
     while True:
+        user_delete_vacancies = input("Удалить вакансии с отсутствующей зарплатой?\n"
+                                      "1 - нет\n"
+                                      "2 - да\n")
+        if user_delete_vacancies == "1":
+            break
+        elif user_delete_vacancies == "2":
+            saver.delete_vacancies_zero_salary()
+            break
+        else:
+            continue
+
+    vacancies_file = saver.get_vacancies_file()
+    display_vacancies = convert_to_instance(vacancies_file)
+    for vacancy in display_vacancies:
+        print(vacancy)
+
+    while True:
         user_vacancies = input("1 - очистить файл?\n"
                                "2 - завершить работу программы?\n")
         if user_vacancies == "1":
