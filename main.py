@@ -1,23 +1,55 @@
+from json import JSONDecodeError
+
+from settings import DATA_VACANCIES_PATH
+from src.func_utils import get_instances_hh, get_instances_sj, sorted_vacancies_salary, convert_to_instance
+from src.work_data import JsonSaver
+
+
 def main():
-    hh_api = HHApiVacancies("python")
-    hh_vacancies = hh_api.get_vacancies(5)
-    hh_instances = create_hh_instances(hh_vacancies)
-    hh_sorted_instances = sorted_vacancies_salary(hh_instances)
-    for vac in hh_sorted_instances:
-        print(vac)
+    user_name_vacancy = input("Введите название вакансии: ")
+    user_quantity_vacancies = int(
+        input("Сколько вакансий искать (максимальное количество вакансий 100, по умолчанию 10): "))
+    if 0 < user_quantity_vacancies > 100:
+        user_quantity_vacancies = 10
 
-    # sj_sort_vac = sorted_vacancies_date(hh_instances)
-    # print()
+    hh_instances = get_instances_hh(user_name_vacancy, user_quantity_vacancies)
+    sj_instances = get_instances_sj(user_name_vacancy, user_quantity_vacancies)
 
-    # sj_api = SJApiVacancies("linux")
-    # sj_vacancies = sj_api.get_vacancies()
-    # print()
-    # sj_instances = SuperJobVacancy.create_sj_instances(sj_vacancies)
-    # print()
-    # sj_sort_vac = sorted_vacancies_date(hh_instances)
-    # print()
-    # for instancy in hh_instances:
-    #     print(instancy)
+    while True:
+        user_file = input("1 - перезаписать файл новыми вакансиями\n"
+                          "2 - добавить в файл вакансии\n"
+                          "3 - продолжить\n")
+        saver = JsonSaver(DATA_VACANCIES_PATH)
+        if user_file == "1":
+            sorted_instances = sorted_vacancies_salary(hh_instances + sj_instances)
+            saver.create_vacancies_file(sorted_instances)
+            break
+        elif user_file == "2":
+            sorted_instances = sorted_vacancies_salary(hh_instances + sj_instances)
+            saver.add_vacancies_file(sorted_instances)
+            break
+        elif user_file == "3":
+            break
+        else:
+            print("Неправильный ввод")
+            continue
+
+    vacancies_file = saver.get_vacancies_file()
+    display_vacancies = convert_to_instance(vacancies_file)
+    for vacancy in display_vacancies:
+        print(vacancy)
+
+    while True:
+        user_vacancies = input("1 - очистить файл?\n"
+                               "2 - завершить работу программы?\n")
+        if user_vacancies == "1":
+            saver.delete_vacancies_file()
+            break
+        elif user_vacancies == "2":
+            break
+        else:
+            print("Ошибка ввода")
+            continue
 
 
 if __name__ == '__main__':
