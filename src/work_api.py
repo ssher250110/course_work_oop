@@ -5,6 +5,7 @@ import requests
 from dotenv import load_dotenv
 
 from settings import BASIC_URL_HH, BASIC_URL_SUPERJOB
+from user_exceptions import ApiError
 
 load_dotenv()
 
@@ -47,10 +48,12 @@ class HHApiVacancies(ApiVacancies):
         :return: список вакансий в виде словарей
         """
         self.params["per_page"] = per_page
-        response_api = requests.get(url=BASIC_URL_HH, params=self.params).json()[
-            "items"
-        ]
-        return response_api
+        try:
+            response_api = requests.get(url=BASIC_URL_HH, params=self.params).json()["items"]
+        except KeyError:
+            raise ApiError()
+        else:
+            return response_api
 
 
 class SJApiVacancies(ApiVacancies):
@@ -76,6 +79,9 @@ class SJApiVacancies(ApiVacancies):
         """
         self.params["count"] = count
         headers = {"X-Api-App-Id": os.getenv("TOKEN_API_SUPERJOB")}
-        return requests.get(
-            url=BASIC_URL_SUPERJOB, json=self.params, headers=headers
-        ).json()["objects"]
+        try:
+            response_api = requests.get(url=BASIC_URL_SUPERJOB, json=self.params, headers=headers).json()["objects"]
+        except KeyError:
+            raise ApiError
+        else:
+            return response_api
