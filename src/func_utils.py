@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from src.work_api import HHApiVacancies, SJApiVacancies
 from src.work_vacancy import Vacancy, HeadHunterVacancy, SuperJobVacancy
 
 
@@ -69,3 +70,17 @@ def convert_to_instance(vacancies: list[dict]) -> list[Vacancy]:
             del vacancy["platform_name"]
             instances.append(SuperJobVacancy(**vacancy))
     return instances
+
+
+def get_instances_hh(name_vacancy, quantity_vacancy):
+    hh_api = HHApiVacancies(name_vacancy)
+    hh_vacancies = hh_api.get_vacancies(quantity_vacancy)
+    hh_instances = create_hh_instances(hh_vacancies)
+    return hh_instances
+
+
+def get_instances_sj(name_vacancy, quantity_vacancy):
+    sj_api = SJApiVacancies(name_vacancy)
+    sj_vacancies = sj_api.get_vacancies(quantity_vacancy)
+    sj_instances = create_sj_instances(sj_vacancies)
+    return sj_instances
