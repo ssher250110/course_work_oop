@@ -2,6 +2,7 @@ from datetime import datetime
 
 from src.work_api import HHApiVacancies, SJApiVacancies
 from src.work_vacancy import Vacancy, HeadHunterVacancy, SuperJobVacancy
+from user_exceptions import ApiError
 
 
 def create_hh_instances(vacancies: list[dict]) -> list[Vacancy]:
@@ -66,21 +67,43 @@ def convert_to_instance(vacancies: list[dict]) -> list[Vacancy]:
         if vacancy["platform_name"] == "HeadHunter":
             del vacancy["platform_name"]
             instances.append(HeadHunterVacancy(**vacancy))
-        elif vacancy["platform_name"] == "SuperJobs":
+        elif vacancy["platform_name"] == "SuperJob":
             del vacancy["platform_name"]
             instances.append(SuperJobVacancy(**vacancy))
     return instances
 
 
-def get_instances_hh(name_vacancy, quantity_vacancy):
+def get_instances_hh(name_vacancy, quantity_vacancy) -> list[Vacancy]:
+    """
+    Метод получения списка экземпляров класса вакансии
+    :param name_vacancy: название вакансии
+    :param quantity_vacancy: количество вакансий
+    :return: список с экземплярами класса вакансий
+    """
     hh_api = HHApiVacancies(name_vacancy)
-    hh_vacancies = hh_api.get_vacancies(quantity_vacancy)
-    hh_instances = create_hh_instances(hh_vacancies)
-    return hh_instances
+    hh_vacancies = []
+
+    try:
+        hh_vacancies = hh_api.get_vacancies(quantity_vacancy)
+    except ApiError:
+        print("Ошибка получения вакансий с HeadHunter")
+
+    return create_hh_instances(hh_vacancies)
 
 
-def get_instances_sj(name_vacancy, quantity_vacancy):
+def get_instances_sj(name_vacancy, quantity_vacancy) -> list[Vacancy]:
+    """
+    Метод получения списка экземпляров класса вакансии
+    :param name_vacancy: название вакансии
+    :param quantity_vacancy: количество вакансий
+    :return: список с экземплярами класса вакансий
+    """
     sj_api = SJApiVacancies(name_vacancy)
-    sj_vacancies = sj_api.get_vacancies(quantity_vacancy)
-    sj_instances = create_sj_instances(sj_vacancies)
-    return sj_instances
+    sj_vacancies = []
+
+    try:
+        sj_vacancies = sj_api.get_vacancies(quantity_vacancy)
+    except ApiError:
+        print("Ошибка получения вакансий с SuperJob")
+
+    return create_sj_instances(sj_vacancies)
