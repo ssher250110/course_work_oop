@@ -49,16 +49,16 @@ class HHApiVacancies(ApiVacancies):
         """
         self.params["per_page"] = per_page
         try:
-            response_api = requests.get(url=BASIC_URL_HH, params=self.params).json()["items"]
+            response_api_hh = requests.get(url=BASIC_URL_HH, params=self.params).json()["items"]
         except KeyError:
             raise ApiError()
         else:
-            return response_api
+            return response_api_hh
 
 
 class SJApiVacancies(ApiVacancies):
     """
-    Класс для получения вакансий с сайта HeadHunter
+    Класс для получения вакансий с сайта SuperJob
     """
 
     def __init__(self, title_vacancy):
@@ -68,7 +68,7 @@ class SJApiVacancies(ApiVacancies):
         """
         self.title_vacancy = title_vacancy
         self.params = {
-            "keywords": [{"srws": 1, "skwc": "or", "keys": self.title_vacancy}]
+            "keywords": [{"srws": 10, "skwc": "or", "keys": self.title_vacancy}]
         }
 
     def get_vacancies(self, count: int = 10):
@@ -78,10 +78,10 @@ class SJApiVacancies(ApiVacancies):
          :return: список вакансий в виде словарей
         """
         self.params["count"] = count
-        headers = {"X-Api-App-Id": os.getenv("TOKEN_API_SUPERJOB")}
         try:
-            response_api = requests.get(url=BASIC_URL_SUPERJOB, json=self.params, headers=headers).json()["objects"]
+            headers = {"X-Api-App-Id": os.getenv("TOKEN_API_SUPERJOB")}
+            response_api_sj = requests.get(url=BASIC_URL_SUPERJOB, json=self.params, headers=headers).json()["objects"]
         except KeyError:
-            raise ApiError
+            raise ApiError()
         else:
-            return response_api
+            return response_api_sj
