@@ -191,7 +191,7 @@ class HeadHunterVacancy(Vacancy):
 
 
 class SuperJobVacancy(Vacancy):
-    platform_name = "SuperJobs"
+    platform_name = "SuperJob"
 
     def __str__(self):
         """
