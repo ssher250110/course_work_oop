@@ -10,6 +10,10 @@ class Saver(ABC):
         self.path = path
 
     @abstractmethod
+    def create_vacancies_file(self, vacancies: list[Vacancy]) -> None:
+        raise NotImplementedError
+
+    @abstractmethod
     def add_vacancies_file(self, vacancies: list[Vacancy]) -> None:
         raise NotImplementedError
 
@@ -23,6 +27,15 @@ class Saver(ABC):
 
 
 class JsonSaver(Saver):
+
+    def create_vacancies_file(self, vacancies: list[Vacancy]) -> None:
+        """
+        Перезапись вакансий в файл json
+        :param vacancies: список экземпляров класса вакансий
+        """
+        vacancies_json = [vacancy.to_dict() for vacancy in vacancies]
+        with open(self.path, "w", encoding="utf-8") as file:
+            json.dump(vacancies_json, file, ensure_ascii=False, indent=4)
 
     def add_vacancies_file(self, vacancies: list[Vacancy]) -> None:
         """
