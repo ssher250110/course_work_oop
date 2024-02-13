@@ -55,7 +55,7 @@ class JsonSaver(Saver):
 
     def get_vacancies_file(self) -> list[dict]:
         """
-        Получение вакансий из файла json
+        Метод получения вакансий из файла json
         :return: список словарей вакансий
         """
         with open(self.path, "r", encoding="utf-8") as file:
@@ -64,7 +64,16 @@ class JsonSaver(Saver):
 
     def delete_vacancies_file(self) -> None:
         """
-        Удаление вакансий из файла json
+        Метод удаления вакансий из файла json
         """
         with open(self.path, "w", encoding="utf-8") as file:
             file.write("")
+
+    def delete_vacancies_zero_salary(self) -> None:
+        """
+        Метод удаляющий зарплаты у которых хоть один параметр равен 0
+        """
+        all_vacancies = self.get_vacancies_file()
+        vacancies = [vacancy for vacancy in all_vacancies if vacancy["salary_from"] != 0 or vacancy["salary_to"] != 0]
+        with open(self.path, "w", encoding="utf-8") as file:
+            json.dump(vacancies, file, ensure_ascii=False, indent=4)
