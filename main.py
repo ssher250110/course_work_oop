@@ -9,7 +9,9 @@ def main():
     user_name_vacancy = input("Введите название вакансии: ")
     user_quantity_vacancies = int(
         input("Сколько вакансий искать (максимальное количество вакансий 100, по умолчанию 10): "))
-    if 0 < user_quantity_vacancies > 100:
+    if 0 < user_quantity_vacancies <= 100:
+        user_quantity_vacancies = user_quantity_vacancies
+    else:
         user_quantity_vacancies = 10
 
     hh_instances = get_instances_hh(user_name_vacancy, user_quantity_vacancies)
