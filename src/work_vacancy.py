@@ -15,15 +15,15 @@ class Vacancy:
     ]
 
     def __init__(
-            self,
-            vacancy_name: str,
-            description: str,
-            address: str,
-            date_published: int | str,
-            salary_from: int | None,
-            salary_to: int | None,
-            currency: str | None,
-            url: str,
+        self,
+        vacancy_name: str,
+        description: str,
+        address: str,
+        date_published: int | str,
+        salary_from: int | None,
+        salary_to: int | None,
+        currency: str | None,
+        url: str,
     ):
         """
         :param vacancy_name: название вакансии
